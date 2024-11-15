@@ -1,5 +1,5 @@
+import 'package:bs_teknology/views/startpage.dart';
 import 'package:flutter/material.dart';
-import 'views/bottomnavigation/bottomnavigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Bottomnavigation(index: 1,)
+      home: const StartPage()
     );
   }
 }

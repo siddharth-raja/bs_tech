@@ -1,4 +1,4 @@
-import 'package:bs_teknology/views/bottomnavigation/home/dashboard.dart';
+import 'package:bs_teknology/views/bottomnavigation/bottomnavigation.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
@@ -45,6 +45,7 @@ class SignIn extends StatelessWidget {
             height: 50,
             width: size.width * 0.9,
             child: TextField(
+              obscureText: true,
               controller: password,
               decoration: const InputDecoration(
                 fillColor: Color.fromARGB(255, 230, 228, 228),
@@ -73,7 +74,7 @@ class SignIn extends StatelessWidget {
                 }else {
                   email.text = "";
                   password.text = "";
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => const Dashboard()));
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => const Bottomnavigation(index: 0,)));
                 }
               }
             },
