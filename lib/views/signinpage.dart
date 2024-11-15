@@ -1,4 +1,4 @@
-import 'package:bs_teknology/views/home/dashboard.dart';
+import 'package:bs_teknology/views/bottomnavigation/home/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
