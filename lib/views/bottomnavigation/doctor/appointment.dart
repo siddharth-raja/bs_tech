@@ -13,9 +13,12 @@ class Appointment extends StatefulWidget {
 }
 
 class _AppointmentState extends State<Appointment> {
-  bool isselected = false;
-  bool isselected2 = false;
   String formtime = "";
+  TextEditingController mobileNumber = TextEditingController();
+  bool isValidPhoneNumber(String phone) {
+    final RegExp phoneRegex = RegExp(r'^[6-9]\d{9}$');
+    return phoneRegex.hasMatch(phone);
+  }
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -98,10 +101,20 @@ class _AppointmentState extends State<Appointment> {
                 SizedBox(
                   height: 60,
                   width: MediaQuery.of(context).size.width,
-                  child: const TextField(
+                  child: TextFormField(
+                    keyboardType: TextInputType.phone,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your phone number';
+                      } else if (!isValidPhoneNumber(value)) {
+                        return 'Please enter a valid 10-digit phone number';
+                      }
+                      return null;
+                    },
+                    controller: mobileNumber,
                     maxLines: null,
                     expands: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none
                       ),
@@ -130,32 +143,15 @@ class _AppointmentState extends State<Appointment> {
                             ),
                             child: const Center(child: Text('MRD23', style: TextStyle(color: Colors.grey),)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
-                                  const Text('John Smith', style: TextStyle(color: Colors.grey),),
-                                  const SizedBox(width: 10,),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isselected = !isselected;
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 20,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        color: isselected ? Colors.green : Colors.red,
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: Center(
-                                        child: Text(isselected ? 'Selected' : 'Not Selected', style: const TextStyle(color: Colors.white))
-                                      ),
-                                    ),
-                                  )
+                                  Text('John Smith', style: TextStyle(color: Colors.grey),),
+                                  SizedBox(width: 10,),
+                                  CustomSelectWidget()
                                 ],
                               ),
                             ),
@@ -173,32 +169,15 @@ class _AppointmentState extends State<Appointment> {
                             ),
                             child: const Center(child: Text('MRD23', style: TextStyle(color: Colors.grey),)),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 50,
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 10, right: 10),
+                              padding: EdgeInsets.only(left: 10, right: 10),
                               child: Row(
                                 children: [
-                                  const Text('Willum', style: TextStyle(color: Colors.grey),),
-                                  const SizedBox(width: 40,),
-                                  GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        isselected2 = !isselected2;
-                                      });
-                                    },
-                                    child: Container(
-                                      height: 20,
-                                      width: 100,
-                                      decoration: BoxDecoration(
-                                        color: isselected2 ? Colors.green : Colors.red,
-                                        borderRadius: BorderRadius.circular(6),
-                                      ),
-                                      child: Center(
-                                        child: Text(isselected2 ? 'Selected' : 'Not Selected', style: const TextStyle(color: Colors.white))
-                                      ),
-                                    ),
-                                  )
+                                  Text('Willum', style: TextStyle(color: Colors.grey),),
+                                  SizedBox(width: 40,),
+                                  CustomSelectWidget()
                                 ],
                               ),
                             ),
@@ -213,6 +192,8 @@ class _AppointmentState extends State<Appointment> {
                   onTap: () {
                     if(formtime == "") {
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Center(child: Text('Time not selected')), behavior: SnackBarBehavior.floating, duration: Duration(seconds: 2),));
+                    } else if(mobileNumber.text.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Center(child: Text('Please Enter Mobile Number')), behavior: SnackBarBehavior.floating, duration: Duration(seconds: 2),));
                     } else {
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const Bottomnavigation(index: 0,)));
                     }
@@ -232,6 +213,38 @@ class _AppointmentState extends State<Appointment> {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class CustomSelectWidget extends StatefulWidget {
+  const CustomSelectWidget({super.key});
+
+  @override
+  State<CustomSelectWidget> createState() => _CustomSelectWidgetState();
+}
+
+class _CustomSelectWidgetState extends State<CustomSelectWidget> {
+  bool isselected = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isselected = !isselected;
+        });
+      },
+      child: Container(
+        height: 20,
+        width: 100,
+        decoration: BoxDecoration(
+          color: isselected ? Colors.green : Colors.red,
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Center(
+          child: Text(isselected ? 'Selected' : 'Not Selected', style: const TextStyle(color: Colors.white))
+        ),
       ),
     );
   }
