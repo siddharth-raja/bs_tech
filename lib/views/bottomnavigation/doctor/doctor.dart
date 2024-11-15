@@ -114,86 +114,90 @@ class _DoctorlistState extends State<Doctorlist> {
               ? const Center(child: Text('No doctors available'))
               : Padding(
                   padding: const EdgeInsets.only(left: 16, right: 16),
-                  child: ListView.builder(
-                    itemCount: filteredDoctors.length,
-                    itemBuilder: (context, index) {
-                      final doctor = filteredDoctors[index];
-                      return Column(
-                        children: [
-                          Container(
-                            height: 110,
-                            width: size.width,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        doctor.name,
-                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                      ),
-                                      const Spacer(),
-                                      GestureDetector(
-                                        behavior: HitTestBehavior.opaque,
-                                        onTap: () {
-                                          Navigator.push(context, MaterialPageRoute(builder: (_) => Appointment(name: doctor.name, designation: doctor.designation,)));
-                                        },
-                                        child: Container(
+                  child: MediaQuery.removePadding(
+                    context: context,
+                    removeTop: true,
+                    child: ListView.builder(
+                      itemCount: filteredDoctors.length,
+                      itemBuilder: (context, index) {
+                        final doctor = filteredDoctors[index];
+                        return Column(
+                          children: [
+                            Container(
+                              height: 110,
+                              width: size.width,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(20.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          doctor.name,
+                                          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                        ),
+                                        const Spacer(),
+                                        GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () {
+                                            Navigator.push(context, MaterialPageRoute(builder: (_) => Appointment(name: doctor.name, designation: doctor.designation,)));
+                                          },
+                                          child: Container(
+                                            height: 30,
+                                            width: 130,
+                                            decoration: BoxDecoration(
+                                              color: const Color.fromARGB(255, 205, 84, 75),
+                                              borderRadius: BorderRadius.circular(6),
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                'Book Appointment',
+                                                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                              ),
+                                            ),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          truncateString(doctor.designation, 13),
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 18),
+                                        ),
+                                        const Spacer(),
+                                        Container(
                                           height: 30,
                                           width: 130,
                                           decoration: BoxDecoration(
-                                            color: Colors.red,
+                                            color: const Color.fromARGB(255, 218, 207, 104),
                                             borderRadius: BorderRadius.circular(6),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              'Book Appointment',
-                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                                              doctor.timing,
+                                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                                             ),
                                           ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        truncateString(doctor.designation, 13),
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.bold, color: Colors.grey, fontSize: 18),
-                                      ),
-                                      const Spacer(),
-                                      Container(
-                                        height: 30,
-                                        width: 130,
-                                        decoration: BoxDecoration(
-                                          color: Colors.yellow,
-                                          borderRadius: BorderRadius.circular(6),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            doctor.timing,
-                                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ],
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                        ],
-                      );
-                    },
+                            const SizedBox(height: 10),
+                          ],
+                        );
+                      },
+                    ),
                   ),
                 ),
         ),

@@ -35,8 +35,13 @@ class BottomnavigationState extends State<Bottomnavigation> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 243, 240, 240),
-        body: Center(
-          child: _widgetOptions.elementAt(_currentIndex),
+        body: PopScope(
+          canPop: false,
+          child: SafeArea(
+            child: Center(
+              child: _widgetOptions.elementAt(_currentIndex),
+            ),
+          ),
         ),
         bottomNavigationBar: SalomonBottomBar(
           backgroundColor: Colors.white,
